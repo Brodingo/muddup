@@ -1,0 +1,14 @@
+.theme--cantrip {
+  background-color: #111;
+  color: #fff;
+}
+
+.theme--cantrip header,
+.theme--cantrip footer {
+  background-color: darkslategrey;
+  box-shadow: 0 0 4px rgba(0,0,0,.5);
+}
+
+.theme--cantrip .command {
+  border-color: grey;
+}
