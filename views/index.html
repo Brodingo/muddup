@@ -27,29 +27,26 @@
         <button class="new-connection">
           New Connection
         </button>
-        <div class="status--message">
-          Disconnected
+        <div class="connections">
+          
         </div>
       </header>
 
-      <main class="output">
-        <span>Yes hello</span>
-      </main>
+      <main class="scrollback"></main>
 
       <footer>
-        <form class="command">
+        <div class="command">
           <input autocomplete="off" type="text">
-          <button type="submit">Send</button>
-        </form>
+<!--           <button class="send">Send</button> -->
+        </div>
       </footer>
       
     </div>
     
-    </script>
+    
     <!-- Your web-app is https, so your scripts need to be too -->
-    <script src="https://code.jquery.com/jquery-2.2.1.min.js"
-            integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
-            crossorigin="anonymous"></script>
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script src="/client.js"></script>
     
 

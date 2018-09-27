@@ -1,17 +1,26 @@
-// server.js
-// where your node app starts
-
-// init project
+// Setup express server
 var express = require('express');
 var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+var port = process.env.PORT || 3000;
 
-// we've started you off with Express, 
-// but feel free to use whatever libs or frameworks you'd like through `package.json`.
+server.listen(port, function(){
+  console.log('Server listening at port %d', port);
+});
+
+sassMiddleware = require("node-sass-middleware");
+
+app.use(sassMiddleware({
+  src: __dirname + '/public',
+  dest: '/tmp',
+  //debug: true,
+  //outputStyle: 'compressed',
+}));
 
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
+app.use(express.static('/tmp'));
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (request, response) {
@@ -20,27 +29,23 @@ app.get("/", function (request, response) {
 
 io.on('connection', function(socket){
   console.log('a user connected');
-});
 
+  // When the client emits 'new command', this listens and executes
+  socket.on('new command', function (data) {
+    
+    var command = data.command;
+    
+    console.log('Command received: ' + command);
+    // We tell the client to execute 'echo'
+    socket.emit('echo', {
+      echo: command
+    });
+    
+    socket.emit('output', {
+      output: 'Command to send to thing: ' + command
+    });
+    
+  });
 
-//app.get("/dreams", function (request, response) {
-//  response.send(dreams);
-//});
-
-// could also use the POST body instead of query string: http://expressjs.com/en/api.html#req.body
-// app.post("/dreams", function (request, response) {
-//   dreams.push(request.query.dream);
-//   response.sendStatus(200);
-// });
-
-// Simple in-memory store for now
-// var dreams = [
-//   "Find and count some sheep",
-//   "Climb a really tall mountain",
-//   "Wash the dishes"
-// ];
-
-// listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
-  console.log('Your app is listening on port ' + listener.address().port);
+  
 });

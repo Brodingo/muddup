@@ -7,27 +7,72 @@
 $(function() {
   //console.log('hello world :o');
   
+  var socket = io();
+  
   var $command = $('.command');
   var $input = $command.find('input');
-  var $output = $('.output');
+  var $scrollback = $('.scrollback');
+  var $new = $('.new-connection');
   
-  $command.submit(function(event) {
-    event.preventDefault();
+  // Sends a command
+  var sendCommand = function () {
     var command = $input.val();
+
+    // if there is a non-empty message and a socket connection
+    // if (message && connected) {
+      $input.val(command);
+      $input.select();
+      // tell server to execute 'new message' and send along one parameter
+      socket.emit('new command', {
+        command: command
+      });
+    // }
+  }
+
+  // Main command input
+  $input.keydown(function(event) {
     
-    $output.trigger('update', command);
+    // var command = $input.val();
     
-    $input.val(command);
-    $input.select();
+    // Enter key
+    if (event.which === 13) {
+    
+      sendCommand();
+      
+    }
+    
   });
   
-  $output.on('update', function(event,command){
-    $('<div class="echo">').text(command).appendTo($output);
-    $output.trigger('updateScroll');
+  $scrollback.on('echo', function(event,echo){
+    $('<div class="echo">').text(echo).appendTo($scrollback);
+    $scrollback.trigger('updateScroll');
   });
   
-  $output.on('updateScroll', function(event){
-    $output[0].scrollTop = $output[0].scrollHeight;
+  $scrollback.on('output', function(event,output){
+    $('<div class="output">').text(output).appendTo($scrollback);
+    $scrollback.trigger('updateScroll');
   });
+  
+  $scrollback.on('updateScroll', function(event){
+    $scrollback[0].scrollTop = $scrollback[0].scrollHeight;
+  });
+  
+  $new.on('click',function(e){
+    var host = prompt("Please enter a host","");
+    alert("host: " + host);
+  });
+  
+  // Whenever the server emits 'echo', check if user wants the echo
+  socket.on('echo', function (data) {
+    console.log('socket echo');
+    $scrollback.trigger('echo',data.echo);
+  });
+
+  // Whenever the server emits 'echo', check if user wants the echo
+  socket.on('output', function (data) {
+    console.log('socket echo');
+    $scrollback.trigger('output',data.output);
+  });
+
 
 });

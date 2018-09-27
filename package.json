@@ -1,28 +1,22 @@
 {
-	"//1": "describes your app and its dependencies",
-	"//2": "https://docs.npmjs.com/files/package.json",
-	"//3": "updating this file will download and update your packages",
-	"name": "muddup",
-	"version": "0.0.1",
-	"description": "A websocket based MUD client",
-	"main": "server.js",
-	"scripts": {
-		"start": "node server.js"
-	},
-	"dependencies": {
-		"express": "^4.15.2",
-		"socket.io": "^1.7.3"
-	},
-	"engines": {
-		"node": "6.9.x"
-	},
-	"repository": {
-		"url": "https://glitch.com/#!/project/welcome-project"
-	},
-	"license": "MIT",
-	"keywords": [
-		"node",
-		"glitch",
-		"express"
-	]
+  "name": "muddup",
+  "version": "0.0.1",
+  "description": "A websocket based MUD client",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.16.3",
+    "socket.io": "^2.1.1",
+    "webtelnet": "1.1.0",
+		"node-sass-middleware": "0.11.0"
+  },
+  "keywords": [
+    "node",
+    "glitch",
+    "express",
+    "socket.io"
+  ],
+  "license": "MIT"
 }
