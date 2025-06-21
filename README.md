@@ -25,3 +25,5 @@ A websocket based MUD client to relive the glory days.
 - [ ] Aliases
 - [ ] Triggers
 - [ ] Custom GUI elements
+
+RIP Glitch 🎏
